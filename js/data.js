@@ -7,7 +7,7 @@ define(['jquery'], function () {
             dtd.reject();
             return dtd.promise();
         }
-        var key = "Table_" + type;
+        var key = "Table_Test_" + type;
         var self = this;
         return self.isDataTooOld().then(function (force) {
             var json = localStorage.getItem(key);
