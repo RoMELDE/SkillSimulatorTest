@@ -289,9 +289,9 @@ define(['jquery', 'underscore', 'backbone', 'data', 'ui', 'nouislider', 'LZStrin
             else if (nextSkill.Condition.Skillid && (!_.contains(skillIdList, nextSkill.Condition.Skillid))) {
                 $tdnext.find('.skill-add').invisible();
             }
-            else if (currentClass.MaxJobLevel <= joblv) {
+            /*else if (currentClass.MaxJobLevel <= joblv) {
                 $tdnext.find('.skill-add').invisible();
-            }
+            }*/
             else {
                 $tdnext.find('.skill-add').visible();
             }
