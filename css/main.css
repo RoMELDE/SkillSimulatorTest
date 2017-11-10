@@ -22,6 +22,10 @@ div.alert + #main {
     height: calc(100% - 75px);
 }
 
+div.alert + div.alert + #main {
+    height: calc(100% - 150px);
+}
+
 table {
     height: 100%;
 }
