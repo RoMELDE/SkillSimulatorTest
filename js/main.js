@@ -37,6 +37,7 @@ require(['jquery', 'underscore', 'data', 'ui', 'view', 'router'], function ($, _
                         localStorage.setItem("lastUpdate", JSON.stringify(new Date()))
                         NProgress.inc();
                         Router.init();
+                        View.init();
                         NProgress.done();
 
                         //彩蛋

@@ -57,6 +57,13 @@ define(['jquery', 'underscore', 'backbone', 'data', 'ui', 'nouislider', 'LZStrin
         requireSkillIdList = [];
         updateJobText();
     };
+    var init = function () {
+        _.each(Data.data.Class, function (o, i) {
+            if (o.Type == 600) {
+                $('#beingList').append('<li><a href="#class/' + o.Id + '" data-class-id="' + o.Id + '">' + o.NameZh + '</a></li>');
+            }
+        });
+    };
     var render = function (id, savedata) {
         var self = this;
         if (id == 0) {
@@ -114,6 +121,7 @@ define(['jquery', 'underscore', 'backbone', 'data', 'ui', 'nouislider', 'LZStrin
                     .append($('<button class="btn btn-sm btn-success skill-add skill-add-max clearfix" type="button">').append("<span class='glyphicon glyphicon-chevron-up'>").click(function () {
                         maxSkill.call($div);
                     })))
+                .append($("<br/>"))
                 .append($("<div>").addClass('btn-container').addClass('btn-group')
                     .append($('<button class="btn btn-sm btn-danger skill-sub skill-sub-1" type="button">').append("<span class='glyphicon glyphicon-minus'>").click(function () {
                         subSkill.call($div);
@@ -314,7 +322,7 @@ define(['jquery', 'underscore', 'backbone', 'data', 'ui', 'nouislider', 'LZStrin
                 }
             });
             var currentParentClass = Data.getParentClassById(maxClassId);
-            if(!currentParentClass){
+            if (!currentParentClass) {
                 $tdnext.find('.skill-sub').visible();
                 return;
             }
@@ -400,5 +408,6 @@ define(['jquery', 'underscore', 'backbone', 'data', 'ui', 'nouislider', 'LZStrin
         getActiveMenu: getActiveMenu,
         setActiveMenu: setActiveMenu,
         render: render,
+        init: init,
     };
 });
