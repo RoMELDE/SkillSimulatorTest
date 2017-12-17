@@ -122,7 +122,7 @@ define(['jquery'], function () {
         var classes = [];
         var currentClass = getClassById(id);
         var parentClass = currentClass;
-        while (parentClass.Id != 1) {
+        while (parentClass && parentClass.Id != 1) {
             classes.push(parentClass);
             parentClass = getParentClassById(parentClass.Id);
         }

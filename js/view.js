@@ -314,6 +314,10 @@ define(['jquery', 'underscore', 'backbone', 'data', 'ui', 'nouislider', 'LZStrin
                 }
             });
             var currentParentClass = Data.getParentClassById(maxClassId);
+            if(!currentParentClass){
+                $tdnext.find('.skill-sub').visible();
+                return;
+            }
             var currentClass = currentParentClass;
             var parentClass = Data.getParentClassById(currentClass.Id);
             var jobLv = 0, maxLv = 0;
