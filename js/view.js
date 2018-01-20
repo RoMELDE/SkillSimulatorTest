@@ -169,7 +169,7 @@ define(['jquery', 'underscore', 'backbone', 'data', 'ui', 'nouislider', 'LZStrin
         var skillMould = $(this).data('skillmould');
         var nextSkill = baseSkill;
         if (skill) {
-            var nextSkill = Data.getSkillById(skill.NextId);
+            var nextSkill = Data.getNextSkill(skill);
         }
 
         var template = _.template(skillDescTemplate);
@@ -206,12 +206,18 @@ define(['jquery', 'underscore', 'backbone', 'data', 'ui', 'nouislider', 'LZStrin
         var skillMould = $(this).data('skillmould');
         var nextSkill = baseSkill;
         if (skill) {
-            var nextSkill = Data.getSkillById(skill.NextId);
+            nextSkill = Data.getNextSkill(skill);
         }
         if (nextSkill) {
             $this.data('skill', nextSkill);
             $this.data('lv', $this.data('lv') + 1);
             $this.find('.currentLevel').text("Lv." + $this.data('lv'));
+            if (nextSkill.PeakLevel) {
+                $this.find('.currentLevel').addClass('hasPeakLevel');
+            }
+            else {
+                $this.find('.currentLevel').removeClass('hasPeakLevel');
+            }
             skillIdList.push(nextSkill.Id);
             joblv++;
             joblvList[nextSkill.Class] = (joblvList[nextSkill.Class] || 0) + 1;
@@ -227,7 +233,7 @@ define(['jquery', 'underscore', 'backbone', 'data', 'ui', 'nouislider', 'LZStrin
         var skill = $(this).data('skill');
         //var baseSkill = $(this).data('baseskill');
         var skillMould = $(this).data('skillmould');
-        var prevSkill = Data.getSkillByNextId(skill.Id);
+        var prevSkill = Data.getPrevSkill(skill);
 
         if (!prevSkill) {
             $this.addClass('notAvailable');
@@ -236,6 +242,12 @@ define(['jquery', 'underscore', 'backbone', 'data', 'ui', 'nouislider', 'LZStrin
         $this.data('skill', prevSkill);
         $this.data('lv', $this.data('lv') - 1);
         $this.find('.currentLevel').text("Lv." + $this.data('lv'));
+        if (prevSkill && prevSkill.PeakLevel) {
+            $this.find('.currentLevel').addClass('hasPeakLevel');
+        }
+        else {
+            $this.find('.currentLevel').removeClass('hasPeakLevel');
+        }
         skillIdList = _.without(skillIdList, skill.Id);
         joblv--;
         joblvList[skill.Class] = (joblvList[skill.Class] || 0) - 1;
@@ -278,7 +290,7 @@ define(['jquery', 'underscore', 'backbone', 'data', 'ui', 'nouislider', 'LZStrin
             var skillMould = $(o).data('skillmould');
             var nextSkill = baseSkill;
             if (skill) {
-                var nextSkill = Data.getSkillById(skill.NextId);
+                var nextSkill = Data.getNextSkill(skill);
             }
             var $tdnext = $(o).parent().next();
             if (!nextSkill) {

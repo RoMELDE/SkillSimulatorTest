@@ -18,11 +18,11 @@ body {
     padding: 20px 0;
 }
 
-div.alert + #main {
+div.alert+#main {
     height: calc(100% - 75px);
 }
 
-div.alert + div.alert + #main {
+div.alert+div.alert+#main {
     height: calc(100% - 150px);
 }
 
@@ -70,6 +70,10 @@ td .currentLevel {
     background-color: rgba(192, 192, 192, 0.75);
     right: 3px;
     bottom: 3px;
+}
+
+td .currentLevel.hasPeakLevel {
+    background-color: rgba(255, 255, 0, 0.75);
 }
 
 td .btn-container {

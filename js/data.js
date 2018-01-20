@@ -103,9 +103,22 @@ define(['jquery'], function () {
         return skill || null;
     };
 
-    var getSkillByNextId = function (nextid) {
+    var getNextSkill = function (s) {
         var self = this;
-        var skill = _.find(data.Skill, function (p) { return p.NextId === nextid; });
+        var skill = _.find(data.Skill, function (p) { return p.Id === s.NextId || p.Id === s.NextBreakID; });
+        if (skill) {
+            var skillDesc = _.find(data.SkillDesc, function (p) { return p.Id === skill.Desc.Id; });
+            if (skillDesc) {
+                skill.Desc.Text = skillDesc.Desc;
+                skill.Desc.Html = formatSkillText(skill.Desc);
+            }
+        }
+        return skill || null;
+    };
+
+    var getPrevSkill = function (s) {
+        var self = this;
+        var skill = _.find(data.Skill, function (p) { return p.NextId === s.Id || p.NextBreakID === s.Id; });
         if (skill) {
             var skillDesc = _.find(data.SkillDesc, function (p) { return p.Id === skill.Desc.Id; });
             if (skillDesc) {
@@ -163,7 +176,7 @@ define(['jquery'], function () {
                 parentSkill = null;
             }
             else {
-                parentSkill = getSkillByNextId(id);
+                parentSkill = getPrevSkill(parentSkill);
             }
         }
         if (!conditionSkillId) {
@@ -173,7 +186,7 @@ define(['jquery'], function () {
             parentSkill = getSkillById(conditionSkillId);
             while (parentSkill) {
                 conditionSkillId = parentSkill.Id;
-                parentSkill = getSkillByNextId(conditionSkillId);
+                parentSkill = getPrevSkill(parentSkill);
             }
             return conditionSkillId;
         }
@@ -198,7 +211,8 @@ define(['jquery'], function () {
         getClassById: getClassById,
         getParentClassById: getParentClassById,
         getSkillById: getSkillById,
-        getSkillByNextId: getSkillByNextId,
+        getNextSkill: getNextSkill,
+        getPrevSkill: getPrevSkill,
         getSkillByClassId: getSkillByClassId,
         getSkillMouldByClassId: getSkillMouldByClassId,
         getConditionSkillMouldIdBySkillMouldId: getConditionSkillMouldIdBySkillMouldId,
