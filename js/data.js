@@ -44,10 +44,6 @@ define(['jquery'], function () {
         }
         var key = "lastUpdate_SkillSimulatorTest";
         lastUpdate = localStorage.getItem(key);
-        if (!lastUpdate) {
-            dtd.resolve(true);
-            return dtd.promise();
-        }
         var url = 'data/lastUpdate.json'
         return $.ajax({
             url: url,
@@ -58,11 +54,15 @@ define(['jquery'], function () {
             var remote = data;
             isLatest = new Date(local).getTime() >= new Date(remote).getTime();
             lastUpdate = remote;
+            if(!local)
+            {
+                return true;
+            }
             return isLatest == false;
         });
     };
     var saveLastUpdate = function () {
-        localStorage.setItem("lastUpdate_SkillSimulator", lastUpdate)
+        localStorage.setItem("lastUpdate_SkillSimulatorTest", lastUpdate)
     };
 
     var getClassById = function (id) {
