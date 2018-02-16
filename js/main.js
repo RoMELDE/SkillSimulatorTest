@@ -34,7 +34,7 @@ require(['jquery', 'underscore', 'data', 'ui', 'view', 'router'], function ($, _
                 $.when(Data.init("Class"))
                     .done(function () {
                         NProgress.set(0.9);
-                        localStorage.setItem("lastUpdate", JSON.stringify(new Date()))
+                        Data.saveLastUpdate();
                         NProgress.inc();
                         Router.init();
                         View.init();

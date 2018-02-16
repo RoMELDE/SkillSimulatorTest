@@ -33,11 +33,17 @@ define(['jquery'], function () {
             }
         });
     };
-
+    
+    var isLatest;
+    var lastUpdate;
     var isDataTooOld = function () {
         var dtd = $.Deferred();
-        var key = "lastUpdate";
-        var lastUpdate = localStorage.getItem(key);
+        if (isLatest !== undefined) {
+            dtd.resolve(isLatest == false);
+            return dtd.promise();
+        }
+        var key = "lastUpdate_SkillSimulatorTest";
+        lastUpdate = localStorage.getItem(key);
         if (!lastUpdate) {
             dtd.resolve(true);
             return dtd.promise();
@@ -48,10 +54,15 @@ define(['jquery'], function () {
             cache: false,
             dataType: "json"
         }).then(function (data) {
-            var local = JSON.parse(lastUpdate);
+            var local = lastUpdate;
             var remote = data;
-            return new Date(local).getTime() < new Date(remote).getTime();
+            isLatest = new Date(local).getTime() >= new Date(remote).getTime();
+            lastUpdate = remote;
+            return isLatest == false;
         });
+    };
+    var saveLastUpdate = function () {
+        localStorage.setItem("lastUpdate_SkillSimulator", lastUpdate)
     };
 
     var getClassById = function (id) {
@@ -208,6 +219,7 @@ define(['jquery'], function () {
         data: data,
         init: init,
         isDataTooOld: isDataTooOld,
+        saveLastUpdate: saveLastUpdate,
         getClassById: getClassById,
         getParentClassById: getParentClassById,
         getSkillById: getSkillById,
